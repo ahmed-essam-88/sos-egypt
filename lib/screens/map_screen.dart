@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -24,6 +25,14 @@ class _MapScreenState extends State<MapScreen> {
   String filter = 'all';
   String q = '';
   bool started = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (kIsWeb && Uri.base.queryParameters['city'] == 'cairo') {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _load(const LatLng(30.0444, 31.2357)));
+    }
+  }
 
   Future<void> locate() async {
     setState(() {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'data/store.dart';
@@ -12,6 +13,16 @@ import 'theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await app.load();
+  if (kIsWeb && Uri.base.queryParameters.containsKey('shot')) {
+    // Preview-only: used to render screenshots of the web build. Not used on Android.
+    app.onboarded = Uri.base.queryParameters['shot'] != 'onboarding';
+    if (Uri.base.queryParameters['seed'] == '1') {
+      app.contacts
+        ..clear()
+        ..add(Contact('1', 'Mona', '01001234567', primary: true))
+        ..add(Contact('2', 'Ahmed', '01227654321'));
+    }
+  }
   runApp(const SosApp());
 }
 
@@ -43,7 +54,7 @@ class Shell extends StatefulWidget {
 }
 
 class _ShellState extends State<Shell> {
-  int i = 0;
+  int i = int.tryParse(kIsWeb ? (Uri.base.queryParameters['tab'] ?? '0') : '0') ?? 0;
   @override
   Widget build(BuildContext context) {
     final pages = [

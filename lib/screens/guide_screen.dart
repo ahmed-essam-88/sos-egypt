@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import '../data/content.dart';
 import '../data/store.dart';
@@ -14,6 +15,16 @@ class GuideScreen extends StatefulWidget {
 class _GuideScreenState extends State<GuideScreen> {
   final ctl = TextEditingController();
   AssistantAnswer? ans;
+
+  @override
+  void initState() {
+    super.initState();
+    final pq = kIsWeb ? Uri.base.queryParameters['q'] : null;
+    if (pq != null) {
+      ctl.text = pq;
+      ans = analyze(pq);
+    }
+  }
 
   void ask([String? q]) {
     if (q != null) ctl.text = q;
