@@ -439,6 +439,8 @@ class SettingsScreen extends StatelessWidget {
               },
               label: Text(tr('حذف كل بياناتي', 'Delete all my data'))),
           const SizedBox(height: 12),
+          Center(child: Text('${tr('المطوّر', 'Developer')}: احمد عصام محمد توفيق حسن', style: const TextStyle(color: Colors.black54))),
+          const SizedBox(height: 4),
           Center(child: Text('SOS EGYPT v1.0.0', style: const TextStyle(color: Colors.black45))),
         ]),
       ),
